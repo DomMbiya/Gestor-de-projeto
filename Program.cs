@@ -1,3 +1,6 @@
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using keisarmindproject.Data;
 namespace keisarmindproject
 {
     public class Program
@@ -5,6 +8,8 @@ namespace keisarmindproject
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+            builder.Services.AddDbContext<keisarmindprojectContext>(options =>
+                options.UseSqlServer(builder.Configuration.GetConnectionString("keisarmindprojectContext") ?? throw new InvalidOperationException("Connection string 'keisarmindprojectContext' not found.")));
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
